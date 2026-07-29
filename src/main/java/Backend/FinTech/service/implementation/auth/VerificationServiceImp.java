@@ -1,10 +1,10 @@
-package Backend.FinTech.service.User.implementation;
+package Backend.FinTech.service.implementation.auth;
 
-import Backend.FinTech.dto.user.request.CodeRequest;
+import Backend.FinTech.dto.request.auth.CodeRequest;
 import Backend.FinTech.entity.Users;
 import Backend.FinTech.exception.user.UserNotFoundException;
 import Backend.FinTech.repository.UserRepository;
-import Backend.FinTech.service.User.Interface.VerificationService;
+import Backend.FinTech.service.Interface.auth.VerificationService;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

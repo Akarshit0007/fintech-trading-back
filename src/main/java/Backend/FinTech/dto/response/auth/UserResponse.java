@@ -1,4 +1,4 @@
-package Backend.FinTech.dto.user.response;
+package Backend.FinTech.dto.response.auth;
 
 import Backend.FinTech.enums.UserRole;
 import lombok.Builder;

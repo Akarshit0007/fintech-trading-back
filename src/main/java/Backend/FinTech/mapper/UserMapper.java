@@ -1,8 +1,8 @@
 package Backend.FinTech.mapper;
 
 
-import Backend.FinTech.dto.user.request.SignupRequest;
-import Backend.FinTech.dto.user.response.UserResponse;
+import Backend.FinTech.dto.request.auth.SignupRequest;
+import Backend.FinTech.dto.response.auth.UserResponse;
 import Backend.FinTech.entity.Users;
 import Backend.FinTech.enums.UserRole;
 import org.springframework.stereotype.Component;

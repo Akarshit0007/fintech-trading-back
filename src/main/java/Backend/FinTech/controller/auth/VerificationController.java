@@ -1,7 +1,7 @@
-package Backend.FinTech.controller;
+package Backend.FinTech.controller.auth;
 
-import Backend.FinTech.dto.user.request.CodeRequest;
-import Backend.FinTech.service.User.implementation.VerificationServiceImp;
+import Backend.FinTech.dto.request.auth.CodeRequest;
+import Backend.FinTech.service.implementation.auth.VerificationServiceImp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
-
-import static com.fasterxml.jackson.databind.type.LogicalType.Map;
 
 @RestController
 @RequestMapping("/auth")

@@ -1,6 +1,6 @@
-package Backend.FinTech.service.User.Interface;
+package Backend.FinTech.service.Interface.auth;
 
-import Backend.FinTech.dto.user.request.CodeRequest;
+import Backend.FinTech.dto.request.auth.CodeRequest;
 import org.springframework.http.ResponseEntity;
 
 

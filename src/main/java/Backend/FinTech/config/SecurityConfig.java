@@ -52,14 +52,4 @@ public class SecurityConfig {
 }
 
  }
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user1 = User
-//                .withDefaultPasswordEncoder()
-//                .username("Vasu")
-//                .password("Vasu")
-//                .roles("USER")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(user1);
-//    }
+

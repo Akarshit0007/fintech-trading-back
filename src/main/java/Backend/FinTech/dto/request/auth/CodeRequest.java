@@ -1,4 +1,4 @@
-package Backend.FinTech.dto.user.request;
+package Backend.FinTech.dto.request.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

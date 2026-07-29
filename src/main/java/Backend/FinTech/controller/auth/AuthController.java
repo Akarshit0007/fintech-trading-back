@@ -1,10 +1,10 @@
-package Backend.FinTech.controller;
+package Backend.FinTech.controller.auth;
 
-import Backend.FinTech.dto.user.request.LoginRequest;
-import Backend.FinTech.dto.user.request.SignupRequest;
-import Backend.FinTech.dto.user.response.AuthResponse;
-import Backend.FinTech.dto.user.response.UserResponse;
-import Backend.FinTech.service.User.implementation.AuthServiceImp;
+import Backend.FinTech.dto.request.auth.LoginRequest;
+import Backend.FinTech.dto.request.auth.SignupRequest;
+import Backend.FinTech.dto.response.auth.AuthResponse;
+import Backend.FinTech.dto.response.auth.UserResponse;
+import Backend.FinTech.service.implementation.auth.AuthServiceImp;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

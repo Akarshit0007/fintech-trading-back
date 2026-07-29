@@ -1,9 +1,9 @@
-package Backend.FinTech.service.User.implementation;
+package Backend.FinTech.service.implementation.auth;
 
-import Backend.FinTech.dto.user.request.LoginRequest;
-import Backend.FinTech.dto.user.request.SignupRequest;
-import Backend.FinTech.dto.user.response.AuthResponse;
-import Backend.FinTech.dto.user.response.UserResponse;
+import Backend.FinTech.dto.request.auth.LoginRequest;
+import Backend.FinTech.dto.request.auth.SignupRequest;
+import Backend.FinTech.dto.response.auth.AuthResponse;
+import Backend.FinTech.dto.response.auth.UserResponse;
 import Backend.FinTech.entity.Users;
 import Backend.FinTech.exception.auth.AccountLockedException;
 import Backend.FinTech.exception.auth.InvalidCredentialsException;
@@ -11,7 +11,8 @@ import Backend.FinTech.exception.user.UserNotFoundException;
 import Backend.FinTech.mapper.UserMapper;
 
 import Backend.FinTech.repository.UserRepository;
-import Backend.FinTech.service.User.Interface.AuthService;
+import Backend.FinTech.service.Interface.auth.AuthService;
+import Backend.FinTech.service.implementation.wallet.WalletServiceImp;
 import Backend.FinTech.util.JwtUtil;
 import Backend.FinTech.util.PasswordUtil;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,13 @@ public class AuthServiceImp implements AuthService {
 private final UserRepository userRepository;
 private final JwtUtil jwtUtil;
 private  final PasswordUtil passwordUtil;
+private final WalletServiceImp walletServiceImp;
 
-    public AuthServiceImp(UserRepository userRepository, JwtUtil jwtUtil, PasswordUtil passwordUtil) {
+    public AuthServiceImp(UserRepository userRepository, JwtUtil jwtUtil, PasswordUtil passwordUtil, WalletServiceImp walletServiceImp) {
         this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;
         this.passwordUtil = passwordUtil;
+        this.walletServiceImp = walletServiceImp;
     }
 
     @Override
@@ -44,6 +47,7 @@ private  final PasswordUtil passwordUtil;
 
         Users savedUser = userRepository.save(user);
 
+        walletServiceImp.createInitialWallet(savedUser);
         return UserMapper.toResponse(savedUser);
     }
 

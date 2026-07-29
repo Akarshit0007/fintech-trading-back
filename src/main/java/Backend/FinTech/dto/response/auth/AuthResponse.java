@@ -1,4 +1,4 @@
-package Backend.FinTech.dto.user.response;
+package Backend.FinTech.dto.response.auth;
 
 import lombok.Builder;
 import lombok.Data;

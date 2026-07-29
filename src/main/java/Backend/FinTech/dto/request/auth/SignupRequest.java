@@ -1,4 +1,4 @@
-package Backend.FinTech.dto.user.request;
+package Backend.FinTech.dto.request.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
