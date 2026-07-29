@@ -1,0 +1,58 @@
+package Backend.FinTech.controller;
+
+import Backend.FinTech.dto.user.request.CodeRequest;
+import Backend.FinTech.service.User.implementation.VerificationServiceImp;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
+
+import static com.fasterxml.jackson.databind.type.LogicalType.Map;
+
+@RestController
+@RequestMapping("/auth")
+public class VerificationController {
+
+    private VerificationServiceImp verificationServiceImp;
+
+    public  VerificationController(VerificationServiceImp verificationServiceImp) {
+        this.verificationServiceImp = verificationServiceImp;
+    }
+
+    @PostMapping("/generate-code")
+    public ResponseEntity<String> generateCode(@RequestBody CodeRequest codeRequest) {
+        String email = codeRequest.getEmail();
+        System.out.println(email);
+        if (email == null || email.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is empty");
+        }
+
+        try {
+           return verificationServiceImp.generateVerificationCode(codeRequest);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Failed to send email. Please try again later.");
+        }
+    }
+
+    @PostMapping("/verify-code")
+    public ResponseEntity<String> verifyCode(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        String code = request.get("code");
+
+        if (email == null || code == null) {
+            return ResponseEntity.badRequest().body("Email and code are required");
+        }
+
+        boolean isVerified = verificationServiceImp.verifyCode(email, code);
+
+        if (isVerified) {
+            return ResponseEntity.ok("Email verified successfully!");
+        } else {
+            return ResponseEntity.badRequest().body("Invalid or expired verification code.");
+        }
+    }
+}
