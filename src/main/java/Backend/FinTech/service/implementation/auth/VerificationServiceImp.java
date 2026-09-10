@@ -1,12 +1,12 @@
 package Backend.FinTech.service.implementation.auth;
 
 import Backend.FinTech.dto.request.auth.CodeRequest;
+import Backend.FinTech.dto.response.auth.CodeRespose;
 import Backend.FinTech.entity.Users;
 import Backend.FinTech.exception.user.UserNotFoundException;
 import Backend.FinTech.repository.UserRepository;
 import Backend.FinTech.service.Interface.auth.VerificationService;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -26,7 +26,7 @@ public class VerificationServiceImp implements VerificationService {
     }
 
     @Override
-    public ResponseEntity<String> generateVerificationCode(CodeRequest codeRequest) {
+    public CodeRespose generateVerificationCode(CodeRequest codeRequest) {
     System.out.println(codeRequest.getEmail());
         // Checks Whether Email Exist In database Or Not
        Users user = userRepository.findByEmail(codeRequest.getEmail())
@@ -40,15 +40,16 @@ public class VerificationServiceImp implements VerificationService {
             redisTemplate.opsForValue().set(redisKey, code, 300, TimeUnit.SECONDS);
         } catch (Exception e) {
             System.err.println("REDIS ERROR: " + e.getMessage());
-            e.printStackTrace();
             throw e;
         }
 
         // Send the actual email
         System.out.println("Verification Email: " + user.getEmail());
         System.out.println("Verification Code: " + code);
-//        sendEmail(email, code);
-        return ResponseEntity.ok("200");
+        return CodeRespose.builder()
+                .verificationCode(Integer.parseInt(code))
+                .build();
+
     }
 
     @Override

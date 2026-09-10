@@ -1,8 +1,8 @@
 package Backend.FinTech.controller.auth;
 
 import Backend.FinTech.dto.request.auth.CodeRequest;
+import Backend.FinTech.dto.response.auth.CodeRespose;
 import Backend.FinTech.service.implementation.auth.VerificationServiceImp;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,25 +15,20 @@ import java.util.Map;
 @RequestMapping("/auth")
 public class VerificationController {
 
-    private VerificationServiceImp verificationServiceImp;
+    private final VerificationServiceImp verificationServiceImp;
 
     public  VerificationController(VerificationServiceImp verificationServiceImp) {
         this.verificationServiceImp = verificationServiceImp;
     }
 
     @PostMapping("/generate-code")
-    public ResponseEntity<String> generateCode(@RequestBody CodeRequest codeRequest) {
+    public CodeRespose generateCode(@RequestBody CodeRequest codeRequest) {
         String email = codeRequest.getEmail();
         System.out.println(email);
         if (email == null || email.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is empty");
+            throw new RuntimeException("Email Is Empty");
         }
-
-        try {
            return verificationServiceImp.generateVerificationCode(codeRequest);
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Failed to send email. Please try again later.");
-        }
     }
 
     @PostMapping("/verify-code")
