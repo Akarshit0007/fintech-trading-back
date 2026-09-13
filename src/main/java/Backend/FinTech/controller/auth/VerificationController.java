@@ -6,7 +6,6 @@ import Backend.FinTech.dto.response.auth.CodeRespose;
 import Backend.FinTech.dto.response.auth.CodeVerifierResponse;
 import Backend.FinTech.exception.auth.EmptyEmailException;
 import Backend.FinTech.service.implementation.auth.VerificationServiceImp;
-import Backend.FinTech.util.JwtUtil;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
