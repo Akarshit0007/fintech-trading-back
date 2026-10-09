@@ -33,6 +33,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(requests -> requests
 //                .requestMatchers("/auth/signup","/auth/login").permitAll()
                 .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/ws-endpoint/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter,
