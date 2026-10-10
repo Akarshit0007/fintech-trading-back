@@ -1,25 +1,32 @@
 package Backend.FinTech.controller.profile;
 
-import Backend.FinTech.dto.request.profile.PhoneNumberUpdateRequest;
-import Backend.FinTech.service.implementation.profile.ProfileServiceImp;
+import Backend.FinTech.dto.request.profile.UpdateProfileRequest;
+import Backend.FinTech.dto.response.profile.ProfileResponse;
+import Backend.FinTech.service.Interface.profile.ProfileService;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@RestController()
-@RequestMapping("/api")
+@RestController
+@RequestMapping("/api/profile")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProfileController {
-    private final ProfileServiceImp profileServiceImp;
 
-    public ProfileController(ProfileServiceImp profileServiceImp) {
-        this.profileServiceImp = profileServiceImp;
+    private final ProfileService profileService;
+
+    public ProfileController(ProfileService profileService) {
+        this.profileService = profileService;
     }
 
-    @PostMapping("/updatePhoneNumber")
-    public Boolean updatePhoneNumber(@Valid @RequestBody PhoneNumberUpdateRequest phoneNumberUpdateRequest){
-        return profileServiceImp.updatePhoneNumber(phoneNumberUpdateRequest);
+    @GetMapping
+    public ResponseEntity<ProfileResponse> getProfile() {
+        ProfileResponse response = profileService.getProfile();
+        return ResponseEntity.ok(response);
     }
 
+    @PutMapping
+    public ResponseEntity<Boolean> updateProfile(@Valid @RequestBody UpdateProfileRequest request) {
+        boolean success = profileService.updateProfile(request);
+        return ResponseEntity.ok(success);
+    }
 }

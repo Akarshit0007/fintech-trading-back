@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class ProfileResponse {
     private String email;
     private String phoneNumber;
-    private String memberSince;
+    private String name;
 }

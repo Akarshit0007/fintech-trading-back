@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
     private final JwtFilter jwtFilter;
 
     public SecurityConfig(UserDetailsService userDetailsService, JwtFilter jwtFilter) {
@@ -29,28 +29,23 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
         return http
-        .csrf(customizer -> customizer.disable())
-        .authorizeHttpRequests(requests -> requests
-//                .requestMatchers("/auth/signup","/auth/login").permitAll()
-                .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/ws-endpoint/**").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest().authenticated())
-                .addFilterBefore(jwtFilter,
-                        UsernamePasswordAuthenticationFilter.class)
-//        .formLogin(Customizer.withDefaults()) //Disable It If You Want to work on a browser
-//        .httpBasic(Customizer.withDefaults()) //For Postman RestAcess
-        .sessionManagement(session ->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-       .build();
+                .cors(Customizer.withDefaults()) // <--- ENABLE CORS HERE
+                .csrf(customizer -> customizer.disable())
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/ws-endpoint/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated())
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .build();
     }
 
-@Bean
+    @Bean
     public AuthenticationProvider authenticationProvider() {
-    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-    provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
-    provider.setUserDetailsService(userDetailsService);
-    return provider;
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
+        provider.setUserDetailsService(userDetailsService);
+        return provider;
+    }
 }
-
- }
-
