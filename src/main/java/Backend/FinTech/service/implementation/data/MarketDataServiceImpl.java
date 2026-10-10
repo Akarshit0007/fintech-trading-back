@@ -92,7 +92,7 @@ public class MarketDataServiceImpl implements MarketDataSerive {
         @Override
         public CompletionStage<?> onText(WebSocket webSocket, CharSequence data, boolean last) {
             String tickMessage = data.toString();
-            System.out.println("Received Live Tick: " + tickMessage);
+//            System.out.println("Received Live Tick: " + tickMessage);
 
             // Only broadcast actual price ticks (cmd_id: 22998) to the frontend
             if (tickMessage.contains("\"cmd_id\":22998")) {
