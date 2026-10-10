@@ -1,0 +1,28 @@
+Class Names ---> PascalCase
+
+Method Names ---> camelCase
+
+Variable Name ---> camelCase
+
+Constants ---> UPPER_CASE
+        eg---> public static final int MAX_RETRY = 3
+
+Package Name ---> lowercase
+
+Interface Names ---> PascalCase
+
+
+
+Method Naming --->
+        Use verb + intent
+
+boolean naming --->
+is,has,can etc always sound like question
+
+Avoid Magic numbers
+
+Proper Exception Naming --->
+    UserNotFoundException
+    PaymentFailedException
+
+We use enums to avoid magic strings
